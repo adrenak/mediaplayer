@@ -2,8 +2,12 @@
 
 namespace Adrenak.MediaPlayer {
     public interface IMediaPlayer {
+        event Action OnReady;
+        event Action OnPlay;
+        event Action OnPause;
+
         TimeSpan Duration { get; }
-        long Frames { get; }
+        long TotalFrames { get; }
         float FrameRate { get; }
         long CurrentFrame { get; }
         float CurrentPosition { get; }
@@ -13,9 +17,9 @@ namespace Adrenak.MediaPlayer {
         void Play();
         void Pause();
 
-        void Jump(int frameDelta);
-        void Jump(TimeSpan timeSpanDelta);
-        void Jump(float positionDetla);
+        void JumpFrames(int frameDelta);
+        void JumpTimeSpan(TimeSpan timeSpanDelta);
+        void JumpPosition(float positionDetla);
 
         void Seek(int frame);
         void Seek(TimeSpan timeSpace);

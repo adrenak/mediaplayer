@@ -8,8 +8,13 @@ namespace Adrenak.MediaPlayer {
     public class UnityMediaPlayer : MonoBehaviour, IMediaPlayer {
         [SerializeField] VideoPlayer player;
 
+        // EVENTS
+        public event Action OnReady;
+        public event Action OnPlay;
+        public event Action OnPause;
+
         // GETTERS
-        public long Frames {
+        public long TotalFrames {
             get {
                 if (player == null || player.texture == null)
                     return 0;
@@ -29,7 +34,7 @@ namespace Adrenak.MediaPlayer {
             get {
                 if (player == null || player.texture == null)
                     return TimeSpan.FromMilliseconds(0);
-                return TimeSpan.FromSeconds(Frames / FrameRate);
+                return TimeSpan.FromSeconds(TotalFrames / FrameRate);
             }
         }
 
@@ -71,30 +76,43 @@ namespace Adrenak.MediaPlayer {
         }
 
         private void OnPrepared(VideoPlayer source) {
+            OnReady?.Invoke();
+
             if (autoPlay)
                 player.Play();
         }
 
         public void Play() {
-            if(player == null && player.isPrepared)
+            if(player == null && player.isPrepared){
+                OnPlay?.Invoke();
                 player.Play();
+            }
         }
 
         public void Pause() {
-            if (player == null)
+            if (player == null){
+                OnPause?.Invoke();
                 player.Play();
+            }
         }
 
-        public void Jump(int frameDelta) {
-            throw new NotImplementedException();
+        public void JumpFrames(int frameDelta) {
+            var next = CurrentFrame + frameDelta;
+            if (next > TotalFrames || next < 0){
+                Debug.LogWarning("You're trying to jump to a location outside the video track");
+                return;
+            }
+
+            player.frame = next;
         }
 
-        public void Jump(TimeSpan timeSpanDelta) {
-            throw new NotImplementedException();
+        public void JumpTimeSpan(TimeSpan timeSpanDelta) {
+            JumpFrames((int)(timeSpanDelta.Seconds * FrameRate));
         }
 
-        public void Jump(float positionDetla) {
-            throw new NotImplementedException();
+        public void JumpPosition(float positionDelta) {
+            var delta = positionDelta * TotalFrames;
+            JumpFrames((int)delta);
         }
 
         public void Seek(int frame) {
