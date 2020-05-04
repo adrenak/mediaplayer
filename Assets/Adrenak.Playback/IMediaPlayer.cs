@@ -2,6 +2,13 @@
 
 namespace Adrenak.MediaPlayer {
     public interface IMediaPlayer {
+        TimeSpan Duration { get; }
+        long Frames { get; }
+        float FrameRate { get; }
+        long CurrentFrame { get; }
+        float CurrentPosition { get; }
+        TimeSpan CurrentTimeSpan { get; }
+
         void Open(string path, bool autoPlay);
         void Play();
         void Pause();
@@ -13,9 +20,5 @@ namespace Adrenak.MediaPlayer {
         void Seek(int frame);
         void Seek(TimeSpan timeSpace);
         void Seek(float position);
-
-        int CurrentFrame { get; }
-        float CurrentPosition { get; }
-        TimeSpan CurrentTimeSpan { get; }
     }
 }
