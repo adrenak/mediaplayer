@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -16,6 +14,14 @@ namespace Adrenak.MediaPlayer {
         public event Action<int> OnJump;
 
         // GETTERS
+        public Texture Texture {
+            get {
+                if (player == null || player.texture == null)
+                    return null;
+                return player.texture;
+            }
+        }
+
         public bool IsReady { get; private set; }
 
         public bool IsPlaying {

@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 775636671}
   - component: {fileID: 775636670}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Video Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 1682acb9c1b104947a9038a06b95061f, type: 2}
+  m_Texture: {fileID: 0}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -721,6 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b3b3640006f6c498794c431a445e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  videoSurface: {fileID: 775636670}
   status: {fileID: 533705924}
   seekBar: {fileID: 1726466763}
 --- !u!114 &958738747

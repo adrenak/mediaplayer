@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Adrenak.MediaPlayer {
     public interface IMediaPlayer {
@@ -8,6 +9,7 @@ namespace Adrenak.MediaPlayer {
         event Action<long> OnSeek;
         event Action<int> OnJump;
 
+        Texture Texture { get; }
         bool IsReady { get; }
         bool IsPlaying { get; }
         TimeSpan Duration { get; }
