@@ -41,6 +41,11 @@ public class Demo : MonoBehaviour {
         player.JumpPosition(-.1f);
     }
 
+    [ContextMenu("Jump forward some position")]
+    public void Seek() {
+        player.JumpPosition(.1f);
+    }
+
     private void Update() {
         Debug.Log(
             "Duration " + player.Duration + " has " + player.TotalFrames + "frames@" + player.FrameRate + "\n" +

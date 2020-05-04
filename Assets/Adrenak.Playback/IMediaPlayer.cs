@@ -5,7 +5,11 @@ namespace Adrenak.MediaPlayer {
         event Action OnReady;
         event Action OnPlay;
         event Action OnPause;
+        event Action<long> OnSeek;
+        event Action<int> OnJump;
 
+        bool IsReady { get; }
+        bool IsPlaying { get; }
         TimeSpan Duration { get; }
         long TotalFrames { get; }
         float FrameRate { get; }
@@ -17,12 +21,12 @@ namespace Adrenak.MediaPlayer {
         void Play();
         void Pause();
 
-        void JumpFrames(int frameDelta);
+        void JumpFrames(long frameDelta);
         void JumpTimeSpan(TimeSpan timeSpanDelta);
         void JumpPosition(float positionDetla);
 
-        void Seek(int frame);
-        void Seek(TimeSpan timeSpace);
-        void Seek(float position);
+        void SeekFrame(long frame);
+        void SeekTimeSpan(TimeSpan timeSpace);
+        void SeekPosition(float position);
     }
 }

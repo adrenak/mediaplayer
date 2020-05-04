@@ -12,8 +12,20 @@ namespace Adrenak.MediaPlayer {
         public event Action OnReady;
         public event Action OnPlay;
         public event Action OnPause;
+        public event Action<long> OnSeek;
+        public event Action<int> OnJump;
 
         // GETTERS
+        public bool IsReady { get; private set; }
+
+        public bool IsPlaying {
+            get {
+                if (player == null || player.texture == null)
+                    return false;
+                return player.isPlaying;
+            }
+        }
+
         public long TotalFrames {
             get {
                 if (player == null || player.texture == null)
@@ -62,10 +74,10 @@ namespace Adrenak.MediaPlayer {
             }
         }
 
-        public bool autoPlay;
+        bool m_AutoPlay;
 
         public void Open(string path, bool autoPlay) {
-            this.autoPlay = autoPlay;
+            this.m_AutoPlay = autoPlay;
 
             player.source = VideoSource.Url;
             player.url = path;
@@ -76,55 +88,68 @@ namespace Adrenak.MediaPlayer {
         }
 
         private void OnPrepared(VideoPlayer source) {
+            IsReady = true;
             OnReady?.Invoke();
 
-            if (autoPlay)
+            if (m_AutoPlay)
                 player.Play();
         }
 
         public void Play() {
-            if(player == null && player.isPrepared){
+            if (player != null && player.isPrepared) {
                 OnPlay?.Invoke();
                 player.Play();
             }
         }
 
         public void Pause() {
-            if (player == null){
+            if (player != null) {
                 OnPause?.Invoke();
-                player.Play();
+                player.Pause();
             }
         }
 
-        public void JumpFrames(int frameDelta) {
-            var next = CurrentFrame + frameDelta;
-            if (next > TotalFrames || next < 0){
-                Debug.LogWarning("You're trying to jump to a location outside the video track");
+        public void JumpFrames(long frameDelta) {
+            if (frameDelta == 0)
                 return;
-            }
 
-            player.frame = next;
+            var nextFrame = CurrentFrame + frameDelta;
+            OnJump?.Invoke(frameDelta > 0 ? 1 : 0);
+            SeekFrame(nextFrame);
         }
 
         public void JumpTimeSpan(TimeSpan timeSpanDelta) {
-            JumpFrames((int)(timeSpanDelta.Seconds * FrameRate));
+            JumpFrames((long)(timeSpanDelta.Seconds * FrameRate));
         }
 
         public void JumpPosition(float positionDelta) {
             var delta = positionDelta * TotalFrames;
-            JumpFrames((int)delta);
+            JumpFrames((long)delta);
         }
 
-        public void Seek(int frame) {
-            throw new NotImplementedException();
+        public void SeekFrame(long frame) {
+            if (frame < 0) {
+                Debug.LogError("You're trying to seek the video to less than 0 frames");
+                return;
+            }
+
+            if (frame > TotalFrames) {
+                Debug.LogError("You're trying to seek the video beyond it's frames");
+                return;
+            }
+
+            OnSeek?.Invoke(frame);
+            player.frame = frame;
         }
 
-        public void Seek(TimeSpan timeSpace) {
-            throw new NotImplementedException();
+        public void SeekTimeSpan(TimeSpan timeSpan) {
+            var frame = timeSpan.TotalSeconds * FrameRate;
+            SeekFrame((long)frame);
         }
 
-        public void Seek(float position) {
-            throw new NotImplementedException();
+        public void SeekPosition(float position) {
+            var frame = position * TotalFrames;
+            SeekFrame((long)frame);
         }
     }
 }
