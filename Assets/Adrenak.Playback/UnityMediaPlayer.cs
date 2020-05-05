@@ -80,25 +80,21 @@ namespace Adrenak.MediaPlayer {
             }
         }
 
-        bool m_AutoPlay;
-
         public void Open(string path, bool autoPlay) {
-            this.m_AutoPlay = autoPlay;
-
             player.source = VideoSource.Url;
             player.url = path;
             player.Prepare();
 
+            void OnPrepared(VideoPlayer player){
+                IsReady = true;
+                OnReady?.Invoke();
+
+                if (autoPlay)
+                    player.Play();                
+            }
+
             player.prepareCompleted -= OnPrepared;
             player.prepareCompleted += OnPrepared;
-        }
-
-        private void OnPrepared(VideoPlayer source) {
-            IsReady = true;
-            OnReady?.Invoke();
-
-            if (m_AutoPlay)
-                player.Play();
         }
 
         public void Play() {
