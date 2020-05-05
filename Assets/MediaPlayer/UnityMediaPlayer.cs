@@ -10,8 +10,8 @@ namespace Adrenak.MediaPlayer {
         public event Action OnReady;
         public event Action OnPlay;
         public event Action OnPause;
-        public event Action<long> OnSeek;
-        public event Action<int> OnJump;
+        public event Action OnSeek;
+        public event Action OnJump;
 
         // GETTERS
         public Texture Texture {
@@ -112,11 +112,11 @@ namespace Adrenak.MediaPlayer {
         }
 
         public void JumpFrames(long frameDelta) {
-            if (frameDelta == 0)
+            if (!IsPlaying || frameDelta == 0)
                 return;
 
             var nextFrame = CurrentFrame + frameDelta;
-            OnJump?.Invoke(frameDelta > 0 ? 1 : 0);
+            OnJump?.Invoke();
             SeekFrame(nextFrame);
         }
 
@@ -130,17 +130,13 @@ namespace Adrenak.MediaPlayer {
         }
 
         public void SeekFrame(long frame) {
-            if (frame < 0) {
-                Debug.LogError("You're trying to seek the video to less than 0 frames");
-                return;
-            }
+            if (frame < 0)
+                frame = 0;
 
-            if (frame > TotalFrames) {
-                Debug.LogError("You're trying to seek the video beyond it's frames");
-                return;
-            }
+            if (frame > TotalFrames) 
+                frame = TotalFrames;
 
-            OnSeek?.Invoke(frame);
+            OnSeek?.Invoke();
             player.frame = frame;
         }
 

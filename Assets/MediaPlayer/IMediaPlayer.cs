@@ -6,8 +6,8 @@ namespace Adrenak.MediaPlayer {
         event Action OnReady;
         event Action OnPlay;
         event Action OnPause;
-        event Action<long> OnSeek;
-        event Action<int> OnJump;
+        event Action OnSeek;
+        event Action OnJump;
 
         Texture Texture { get; }
         bool IsReady { get; }

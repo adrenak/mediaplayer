@@ -16,12 +16,16 @@ namespace Adrenak.MediaPlayer {
             player.Open("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", false);
 
             player.OnReady += () => {
-                videoSurface.texture = player.Texture;
+                var texture = player.Texture;
+                videoSurface.texture = texture;
+                
+                var fitter = videoSurface.GetComponent<AspectRatioFitter>();
+                fitter.aspectRatio = (float)texture.width / texture.height;
+
                 StartCoroutine(ShowStatus("Ready", 1));
             };
             player.OnPlay += () => StartCoroutine(ShowStatus("Playing", 1));
             player.OnPause += () => StartCoroutine(ShowStatus("Paused", 1));
-            player.OnJump += x => StartCoroutine(ShowStatus($"Jumping " + (x > 0 ? "forward" : "backward"), 1));
         }
 
         IEnumerator ShowStatus(object msg, float delay = 0){
@@ -33,7 +37,6 @@ namespace Adrenak.MediaPlayer {
         private void Update() {
             if (player == null) return;
             seekBar.fillAmount = player.CurrentPosition;
-            Debug.Log(player.IsPlaying);
         }
 
         public void Toggle() {
@@ -47,10 +50,12 @@ namespace Adrenak.MediaPlayer {
 
         public void Forward(){
             player.JumpTimeSpan(TimeSpan.FromSeconds(5));
+            StartCoroutine(ShowStatus("Jumping forward"));
         }
 
         public void Backward() {
             player.JumpTimeSpan(TimeSpan.FromSeconds(-5));
+            StartCoroutine(ShowStatus("Jumping backward"));
         }
     }
 }
