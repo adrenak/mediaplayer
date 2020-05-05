@@ -8,13 +8,15 @@ namespace Adrenak.MediaPlayer {
 
         // EVENTS
         public event Action OnReady;
+        public event Action<Exception> OnError;
         public event Action OnPlay;
         public event Action OnPause;
+        public event Action OnStop;
         public event Action OnSeek;
         public event Action OnJump;
 
         // GETTERS
-        public Texture Texture {
+        public Texture MediaTexture {
             get {
                 if (player == null || player.texture == null)
                     return null;
@@ -85,16 +87,23 @@ namespace Adrenak.MediaPlayer {
             player.url = path;
             player.Prepare();
 
-            void OnPrepared(VideoPlayer player){
+            void OnPrepared(VideoPlayer player) {
                 IsReady = true;
                 OnReady?.Invoke();
 
                 if (autoPlay)
-                    player.Play();                
+                    player.Play();
+            }
+
+            void OnErrorReceived(VideoPlayer player, string message){
+                OnError?.Invoke(new Exception(message));
             }
 
             player.prepareCompleted -= OnPrepared;
             player.prepareCompleted += OnPrepared;
+
+            player.errorReceived -= OnErrorReceived;
+            player.errorReceived += OnErrorReceived;
         }
 
         public void Play() {
@@ -111,8 +120,38 @@ namespace Adrenak.MediaPlayer {
             }
         }
 
+        public void Stop() {
+            player.Stop();
+            OnStop?.Invoke();
+        }
+
+        public void SeekFrame(long frame) {
+            if (MediaTexture == null)
+                return;
+
+            if (frame < 0)
+                frame = 0;
+
+            if (frame > TotalFrames)
+                frame = TotalFrames;
+
+            OnSeek?.Invoke();
+            player.frame = frame;
+        }
+
+        public void SeekTimeSpan(TimeSpan timeSpan) {
+            var frame = timeSpan.TotalSeconds * FrameRate;
+            SeekFrame((long)frame);
+        }
+
+        public void SeekPosition(float position) {
+            position = Mathf.Clamp01(position);
+            var frame = position * TotalFrames;
+            SeekFrame((long)frame);
+        }
+
         public void JumpFrames(long frameDelta) {
-            if (!IsPlaying || frameDelta == 0)
+            if (MediaTexture == null || frameDelta == 0)
                 return;
 
             var nextFrame = CurrentFrame + frameDelta;
@@ -127,27 +166,6 @@ namespace Adrenak.MediaPlayer {
         public void JumpPosition(float positionDelta) {
             var delta = positionDelta * TotalFrames;
             JumpFrames((long)delta);
-        }
-
-        public void SeekFrame(long frame) {
-            if (frame < 0)
-                frame = 0;
-
-            if (frame > TotalFrames) 
-                frame = TotalFrames;
-
-            OnSeek?.Invoke();
-            player.frame = frame;
-        }
-
-        public void SeekTimeSpan(TimeSpan timeSpan) {
-            var frame = timeSpan.TotalSeconds * FrameRate;
-            SeekFrame((long)frame);
-        }
-
-        public void SeekPosition(float position) {
-            var frame = position * TotalFrames;
-            SeekFrame((long)frame);
         }
     }
 }
