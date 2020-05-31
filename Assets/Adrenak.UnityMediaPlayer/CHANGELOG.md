@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/adrenak/mediaplayer/compare/v1.0.0...v1.1.0) (2020-05-31)
+
+
+### Features
+
+* Add ASMDEF and improve sample player scene ([def39b9](https://github.com/adrenak/mediaplayer/commit/def39b9672cc55f354ca8d1a03ea48fa7dec25e8))
+
 # 1.0.0 (2020-05-05)
 
 
