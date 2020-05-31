@@ -1,6 +1,6 @@
 {
 	"name": "com.adrenak.mediaplayer",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"displayName": "Unity Media Player",
 	"description": "A Media Player abstraction that standardises video players. Includes UnityMediaPlayer based on Unity's VideoPlayer.",
 	"unity": "2018.4",
