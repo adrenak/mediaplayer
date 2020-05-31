@@ -1,0 +1,14 @@
+{
+	"name": "com.adrenak.mediaplayer",
+	"version": "1.0.0",
+	"displayName": "Unity Media Player",
+	"description": "A Media Player abstraction that standardises video players. Includes UnityMediaPlayer based on Unity's VideoPlayer.",
+	"unity": "2018.4",
+	"author": {
+		"name": "Vatsal Ambastha",
+		"email": "adrenak_@outlook.com",
+		"url": "www.vatsalambastha.com"
+	},
+	"dependencies": {},
+	"scopedRegistries": []
+}
