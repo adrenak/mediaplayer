@@ -4,6 +4,11 @@ using UnityEngine;
 namespace Adrenak.MediaPlayer {
     public interface IMediaPlayer {
         /// <summary>
+        /// Fired when a request to open a video stream is made
+        /// </summary>
+        public event Action<string> OnOpen;
+
+        /// <summary>
         /// Fired when a video is loaded and it capable of being player
         /// </summary>
         event Action OnReady;

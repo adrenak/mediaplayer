@@ -7,6 +7,7 @@ namespace Adrenak.MediaPlayer {
         [SerializeField] VideoPlayer player;
 
         // EVENTS
+        public event Action<string> OnOpen;
         public event Action OnReady;
         public event Action<Exception> OnError;
         public event Action OnPlay;
@@ -24,7 +25,7 @@ namespace Adrenak.MediaPlayer {
             }
         }
 
-        public bool IsReady { get; private set; }
+        public bool IsReady => player.isPrepared;
 
         public bool IsPlaying {
             get {
@@ -88,11 +89,10 @@ namespace Adrenak.MediaPlayer {
             player.Prepare();
 
             void OnPrepared(VideoPlayer player) {
-                IsReady = true;
                 OnReady?.Invoke();
 
                 if (autoPlay)
-                    player.Play();
+                    Play();
             }
 
             void OnErrorReceived(VideoPlayer player, string message){
@@ -104,6 +104,8 @@ namespace Adrenak.MediaPlayer {
 
             player.errorReceived -= OnErrorReceived;
             player.errorReceived += OnErrorReceived;
+
+            OnOpen?.Invoke(path);
         }
 
         public void Play() {
@@ -121,8 +123,10 @@ namespace Adrenak.MediaPlayer {
         }
 
         public void Stop() {
-            player.Stop();
-            OnStop?.Invoke();
+            if(player != null){
+                player.Stop();
+                OnStop?.Invoke();
+            }
         }
 
         public void SeekFrame(long frame) {
