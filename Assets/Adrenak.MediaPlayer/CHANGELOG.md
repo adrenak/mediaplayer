@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/adrenak/unitymediaplayer/compare/v1.1.0...v1.2.0) (2020-06-07)
+
+
+### Features
+
+* Add OnOpen<string> event to IMediaPlayer ([58365d7](https://github.com/adrenak/unitymediaplayer/commit/58365d772a60fd31239d36f3ebdf6bd2cade869a))
+
 # [1.1.0](https://github.com/adrenak/mediaplayer/compare/v1.0.0...v1.1.0) (2020-05-31)
 
 
