@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/adrenak/mediaplayer/compare/v1.2.0...v1.2.1) (2020-06-07)
+
+
+### Bug Fixes
+
+* Removed pulbic keyword from IMediaPlayer ([6ae6bcf](https://github.com/adrenak/mediaplayer/commit/6ae6bcf6b56d8412c46413ea3d5e25a03ea035b7))
+
 # [1.2.0](https://github.com/adrenak/unitymediaplayer/compare/v1.1.0...v1.2.0) (2020-06-07)
 
 
