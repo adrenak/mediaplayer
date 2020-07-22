@@ -1,0 +1,14 @@
+{
+    "name": "Adrenak.MediaPlayer.Samples",
+    "references": [
+        "Adrenak.MediaPlayer.Runtime"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
