@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/adrenak/mediaplayer/compare/v1.2.1...v2.0.0) (2020-07-22)
+
+
+### Features
+
+* Subtitles parser and displayer added ([5254af2](https://github.com/adrenak/mediaplayer/commit/5254af20234a60e60e436a3ddeeb497a02e89fc0))
+
+
+### BREAKING CHANGES
+
+* IMediaPlayer is now IVideoPlayer
+
 ## [1.2.1](https://github.com/adrenak/mediaplayer/compare/v1.2.0...v1.2.1) (2020-06-07)
 
 
