@@ -1,9 +1,10 @@
 # MediaPlayer
 A standardised media player interface for Unity. Aimed largely towards being able to make video player UI without worrying about the underlying video player.
 
-# The `IMediaPlayer` interface
-## Properties
-* `MediaTexture` The `Texture` object that represents the texture on which the video plays
+# Media Playback
+## The `IVideoPlayer` interface
+### Properties
+* `Texture` The `Texture` object that represents the texture on which the video plays
 * `IsReady` If the video player has loaded the video and the video can be played or not
 * `IsPlaying` If the video is presently playing. False when the video is not loaded or paused.
 * `Duration` The duration of the video in a `TimeSpan` object
@@ -13,7 +14,7 @@ A standardised media player interface for Unity. Aimed largely towards being abl
 * `CurrentPosition` The normalized position of the current frame in the [0,1] rannge
 * `CurrentTimeSpan` The time gap between the video start and the current frame showing
 
-## Methods
+### Methods
 * `Open(string path, bool autoPlay)` Opens a video for loading via the path. `autoPlay` flag decides if the video playback should start immediately after successful loading.
 * `Play` Starts playing/resumes the video
 * `Pause` Pauses the video playback
@@ -27,7 +28,7 @@ A standardised media player interface for Unity. Aimed largely towards being abl
 * `JumpTimeSpan(TimeSpan timeSpanDelta)` Seeks to a frame `timeSpanDelta` duration away from the current frame
 * `JumpPosition(float positionDelta)` Seeks to a frame `positionDelta` percentage from the current frame. Eg. -25f when `CurrentPosition` is .75f will take it to the middle of the video
 
-## Events
+### Events
 * `OnReady` Fired when a video is loaded and it capable of being player
 * `OnError` Fired when there is an error in loading the video
 * `OnPlay` Fired when the video starts playing for the first time or is resumed in the middle of the playback
@@ -36,8 +37,26 @@ A standardised media player interface for Unity. Aimed largely towards being abl
 * `OnSeek` Fired when the media player seeks to another frame
 * `OnJump` Fired when the media played jumps forward or backward by any number of frames
 
+# Subtitles
+Subtitle related code is a modified version of [@roguecode](https://www.github.com/roguecode)'s [Unity-Simple-SRT](https://github.com/roguecode/Unity-Simple-SRT) on GitHub.
+
+## The `SubtitleBlock` class
+### Properties
+* `Index` The Index of the block in the subtitle file.
+* `Length` The duration of the subtitle block in seconds
+* `From` The moment the subtitles should start displaying
+* `To` The moment the subtitles should stop displaying
+* `Text` The text to be displayed
+
+## The `ISubtitlesParser` interface
+### Methods
+* `GetByTime(double time)` Returns the subtitle block from the subtitle file at the specified time
+
 # Notes
-The project contains a `IMediaPlayer` implementation for Unity's VideoPlayer component. Please see `SampleMediaPlayer` under `Samples/` 
+The project contains the following:
+* `IVideoPlayer`: An implementation for Unity's VideoPlayer component. Please see `SampleMediaPlayer` under `Samples/` 
+* `SRTParser`: An implementation of `ISubtitlesParser` for working with `SRT` subtitle format. 
+* `SubtitleDisplayer`: A simple UI for showing the subtitles that requires an instance of `ISubstitlesParser`
 
 # Contact
 Vatsal "adrenak" Ambastha  
