@@ -18,7 +18,7 @@ namespace Adrenak.MediaPlayer {
             player.Open(urlInput.text, autoPlay.isOn);
 
             player.OnReady += () => {
-                var texture = player.MediaTexture;
+                var texture = player.VideoTexture;
                 videoSurface.texture = texture;
 
                 var fitter = videoSurface.GetComponent<AspectRatioFitter>();

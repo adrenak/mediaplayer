@@ -17,7 +17,9 @@ namespace Adrenak.MediaPlayer {
         public event Action OnJump;
 
         // GETTERS
-        public Texture MediaTexture {
+        public Texture MediaTexture => VideoTexture;
+
+        public Texture VideoTexture {
             get {
                 if (player == null || player.texture == null)
                     return null;
@@ -130,7 +132,7 @@ namespace Adrenak.MediaPlayer {
         }
 
         public void SeekFrame(long frame) {
-            if (MediaTexture == null)
+            if (VideoTexture == null)
                 return;
 
             if (frame < 0)
@@ -155,7 +157,7 @@ namespace Adrenak.MediaPlayer {
         }
 
         public void JumpFrames(long frameDelta) {
-            if (MediaTexture == null || frameDelta == 0)
+            if (VideoTexture == null || frameDelta == 0)
                 return;
 
             var nextFrame = CurrentFrame + frameDelta;
