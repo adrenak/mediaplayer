@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/adrenak/mediaplayer/compare/v2.0.0...v2.1.0) (2020-07-24)
+
+
+### Features
+
+* Update documentation ([2da8c31](https://github.com/adrenak/mediaplayer/commit/2da8c31fd3a5e36748853c0f66ea7b887c19e1ce))
+
 # [2.0.0](https://github.com/adrenak/mediaplayer/compare/v1.2.1...v2.0.0) (2020-07-22)
 
 
