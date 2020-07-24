@@ -43,10 +43,13 @@ namespace Adrenak.MediaPlayer {
         /// </summary>
         event Action OnJump;
 
+        [Obsolete("Use VideoTexture property instead. This property will soon be removed!")]
+        Texture MediaTexture { get; }
+
         /// <summary>
         /// The `Texture` object that represents the texture on which the video plays
         /// </summary>
-        Texture MediaTexture { get; }
+        Texture VideoTexture { get; }
 
         /// <summary>
         /// If the video player has loaded the video and the video can be played or not
