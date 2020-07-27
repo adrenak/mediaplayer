@@ -8,6 +8,14 @@ namespace Adrenak.MediaPlayer {
         public float Offset { get; set; }
         public ISubtitlesParser Parser { get; set; }
 
+        [SerializeField] bool isDisplaying;
+        public bool IsDisplaying {
+            get => isDisplaying;
+            set {
+                isDisplaying = value;
+                text.enabled = value;
+            }
+        }
         [SerializeField] Text text;
 
         public IEnumerator Start() {
@@ -15,7 +23,7 @@ namespace Adrenak.MediaPlayer {
             SubtitleBlock currentSubtitle = null;
 
             while (true) {
-                if (Parser == null){
+                if (Parser == null) {
                     yield return null;
                     continue;
                 }
@@ -27,6 +35,9 @@ namespace Adrenak.MediaPlayer {
                         text.text = currentSubtitle.Text;
                     }
                 }
+                else
+                    text.text = string.Empty;
+
                 yield return null;
             }
         }
