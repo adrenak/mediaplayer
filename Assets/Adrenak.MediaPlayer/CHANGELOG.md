@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/adrenak/mediaplayer/compare/v2.1.0...v2.2.0) (2020-07-27)
+
+
+### Features
+
+* Add IsDisplaying flag to SubtitleDisplayer ([764938e](https://github.com/adrenak/mediaplayer/commit/764938ec65883802ab2f1d392ffc5c38dc3f4e6f))
+
 # [2.1.0](https://github.com/adrenak/mediaplayer/compare/v2.0.0...v2.1.0) (2020-07-24)
 
 
